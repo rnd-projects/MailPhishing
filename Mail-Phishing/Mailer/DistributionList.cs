@@ -22,5 +22,11 @@ namespace Mail_Phishing.Mailer
         public DLT DType { get; set; }
         public string CN { get; set; }
         public string FILORDN { get; set; }
+
+        public string DTypeDescription {
+            get { 
+                return (DType.Equals(DLT.DL) ? "Static" : "Dynamic");
+            }
+        }
     }
 }
