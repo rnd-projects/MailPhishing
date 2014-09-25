@@ -25,6 +25,7 @@ namespace Mail_Phishing
     {
         public List<DistributionList> DLGridData;
         public static DistributionListUtil DLUtils = new DistributionListUtil();
+        
 
         public MainWindow()
         {
@@ -74,25 +75,40 @@ namespace Mail_Phishing
         {
             string searchText = DLSearchTextbox.Text;
 
-            DLGridData = new List<DistributionList>()
+            if (!string.IsNullOrEmpty(searchText))
             {
-                new DistributionList { DType = DLT.DL, CN = "CN-01", FILORDN = "FILORDN-01" },
-                new DistributionList { DType = DLT.DL, CN = "CN-02", FILORDN = "FILORDN-02" },
-                new DistributionList { DType = DLT.DDL, CN = "CN-03", FILORDN = "FILORDN-03" },
-                new DistributionList { DType = DLT.DDL, CN = "CN-04", FILORDN = "FILORDN-04" }
-            };
+                var temp = DLGridData;
 
-            DLGrid.ItemsSource = DLGridData;
+                searchText = searchText.ToLower();
+
+                temp = temp.Where(item => item.CN.ToLower().Contains(searchText)).ToList();
+
+                DLGrid.ItemsSource = temp;
+            }
+            else
+            {
+                DLGrid.ItemsSource = DLGridData;
+            }
         }
 
         private void DLSearchTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void DLGrid_Loaded(object sender, RoutedEventArgs e)
-        {
+            string searchText = DLSearchTextbox.Text;
             
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                var temp = DLGridData;
+
+                searchText = searchText.ToLower();
+
+                temp = temp.Where(item => item.CN.ToLower().Contains(searchText)).ToList();
+
+                DLGrid.ItemsSource = temp;
+            }
+            else
+            {
+                DLGrid.ItemsSource = DLGridData;
+            }
         }
 
     }
