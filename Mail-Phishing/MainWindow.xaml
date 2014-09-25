@@ -1,8 +1,94 @@
 ﻿<Window x:Class="Mail_Phishing.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="ISD Mail Phishing" Height="645" Width="635" ResizeMode="NoResize">
+
+    <Grid Margin="10,10,-1,10">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="24*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="24*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="24*" />
+            <RowDefinition Height="25*" />
+        </Grid.RowDefinitions>
+
+        <Label Name ="DLSearchLabel"
+               Content="Distribution List:"
+               Grid.Row="0"
+               Grid.RowSpan="1"
+               Grid.Column="0"
+               Grid.ColumnSpan="4" />
+
+        <TextBox Name="DLSearchTextbox"
+                 TextWrapping="Wrap"
+                 Text=""
+                 TextChanged="DLSearchTextbox_TextChanged"
+                 Grid.Row="0"
+                 Grid.RowSpan="1"
+                 Grid.Column="5"
+                 Grid.ColumnSpan="10" />
+
+        <Button Name="DLSearchSubmitButton"
+                Content="Search"
+                Click="DLSearchSubmitButton_Click"
+                Grid.Row="0"
+                Grid.RowSpan="1"
+                Grid.Column="16"
+                Grid.ColumnSpan="2" />
+
+        <DataGrid Name="DLGrid"
+                  Grid.Row="2"
+                  Grid.RowSpan="22"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="24" Margin="0,0,10,0" />
     </Grid>
 </Window>
