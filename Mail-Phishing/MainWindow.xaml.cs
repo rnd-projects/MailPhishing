@@ -24,10 +24,27 @@ namespace Mail_Phishing
     public partial class MainWindow : Window
     {
         public List<DistributionList> DLGridData;
+        public static DistributionListUtil DLUtils = new DistributionListUtil();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            DLGridData = GetDLGridData();
+            DLGrid.ItemsSource = DLGridData;
+        }
+
+
+        private List<DistributionList> GetDLGridData()
+        {
+            List<DistributionList> data = new List<DistributionList>();
+
+            data = DLUtils.GetDistributionLists();
+            data.AddRange(DLUtils.GetDynamicDistributionLists());
+
+            data = data.OrderBy(item => item.CN).ToList();
+
+            return data;
         }
 
         //private void SampleProgramCode()
