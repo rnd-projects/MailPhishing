@@ -1,0 +1,8 @@
+﻿<Window x:Class="Mail_Phishing.SelectMailTemplateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SelectMailTemplateWindow" Height="507" Width="657">
+    <Grid>
+        
+    </Grid>
+</Window>

@@ -111,6 +111,28 @@ namespace Mail_Phishing
             }
         }
 
+        private void DLGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DLGrid.SelectedItems.Count > 0)
+            {
+                DLSendMailButton.IsEnabled = true;
+            }
+            else
+            {
+                DLSendMailButton.IsEnabled = false;
+            }
+        }
+
+        private void DLSendMailButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<DistributionList> selectedDLs = new List<DistributionList>();
+
+            foreach (var dl in DLGrid.SelectedItems)
+            {
+                selectedDLs.Add((DistributionList)dl);
+            }
+        }
+
     }
 
 }

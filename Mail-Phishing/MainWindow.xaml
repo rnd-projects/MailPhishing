@@ -6,11 +6,7 @@
         Width="635"
         ResizeMode="NoResize">
 
-    <!--<Window.DataContext>
-        <model:MainWindowModel x:Name="Model" />
-    </Window.DataContext>-->
-    
-    <Grid Margin="10,10,-1,10">
+    <Grid Margin="10">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*" />
@@ -81,8 +77,8 @@
                  TextChanged="DLSearchTextbox_TextChanged"
                  Grid.Row="0"
                  Grid.RowSpan="1"
-                 Grid.Column="5"
-                 Grid.ColumnSpan="10" />
+                 Grid.Column="4"
+                 Grid.ColumnSpan="11" />
 
         <Button Name="DLSearchSubmitButton"
                 Content="Search"
@@ -94,13 +90,14 @@
 
         <DataGrid Name="DLGrid"
                   Grid.Row="2"
-                  Grid.RowSpan="22"
+                  Grid.RowSpan="20"
                   Grid.Column="0"
-                  Grid.ColumnSpan="24" Margin="0,0,10,0"
+                  Grid.ColumnSpan="24"
                   AutoGenerateColumns="False"
                   SelectionMode="Extended"
-                  IsReadOnly="True">
-            
+                  IsReadOnly="True"
+                  SelectionChanged="DLGrid_SelectionChanged">
+
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Distribution List"
@@ -113,6 +110,15 @@
                     Binding="{Binding DTypeDescription}" />
             </DataGrid.Columns>
         </DataGrid>
-        
+
+        <Button Name="DLSendMailButton"
+                Content="Send Mail"
+                Grid.Row="23"
+                Grid.RowSpan="1"
+                Grid.Column="21"
+                Grid.ColumnSpan="3"
+                IsEnabled="False"
+                Click="DLSendMailButton_Click">
+        </Button>
     </Grid>
 </Window>
