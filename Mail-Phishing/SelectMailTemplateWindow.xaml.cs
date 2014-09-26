@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using Mail_Phishing.Mailer;
+
 namespace Mail_Phishing
 {
     /// <summary>
@@ -19,9 +21,31 @@ namespace Mail_Phishing
     /// </summary>
     public partial class SelectMailTemplateWindow : Window
     {
+        private List<MailTemplate> mailTemplates;
+
         public SelectMailTemplateWindow()
         {
             InitializeComponent();
+
+            mailTemplates = MailTemplate.GetMailTemplates();
+
+            ListOfEmails.ItemsSource = mailTemplates;
+            ListOfEmails.DisplayMemberPath = "MailTitle";
+        }
+
+        private void ConfirmSendMail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ListOfEmails_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems.Count > 0)
+            {
+                MailTemplate selectedTemplate = e.AddedItems[0] as MailTemplate;
+
+                ReviewEmailTextBlock.Text = selectedTemplate.MailBody;
+            }
         }
     }
 }

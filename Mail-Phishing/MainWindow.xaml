@@ -1,98 +1,88 @@
 ﻿<Window x:Class="Mail_Phishing.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ISD Mail Phishing"
+        Title="ISD Mail Phishing | Select Distribution List"
         Height="645"
         Width="635"
         ResizeMode="NoResize">
 
-    <Grid Margin="10">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-            <ColumnDefinition Width="0.5*" />
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-            <RowDefinition Height="25*" />
-        </Grid.RowDefinitions>
-
-        <Label Name ="DLSearchLabel"
-               Content="Distribution List:"
-               Grid.Row="0"
-               Grid.RowSpan="1"
-               Grid.Column="0"
-               Grid.ColumnSpan="4" />
+    <Grid>
+        <!--
+        <GroupBox Name="SearchControlsGroup"
+                  Header="Search Distribution Lists" 
+                  Margin="10,0,228,554"/>
 
         <TextBox Name="DLSearchTextbox"
                  TextWrapping="Wrap"
                  Text=""
                  TextChanged="DLSearchTextbox_TextChanged"
-                 Grid.Row="0"
-                 Grid.RowSpan="1"
-                 Grid.Column="4"
-                 Grid.ColumnSpan="11" />
+                 Margin="10,3,330,582">
+        </TextBox>
 
         <Button Name="DLSearchSubmitButton"
                 Content="Search"
                 Click="DLSearchSubmitButton_Click"
-                Grid.Row="0"
-                Grid.RowSpan="1"
-                Grid.Column="16"
-                Grid.ColumnSpan="2" />
+                Margin="322,21,242,563">
+        </Button>
+
+        <GroupBox Name="ToolsControlsGroup"
+                  Header="Tools"
+                  Margin="406,0,10,554"/>
+
+        <Button Name="DLViewRecipientsButton"
+                Content="View Recipients"
+                Margin="417,21,104,563"
+                IsEnabled="False"
+                Click="DLViewRecipientsButton_Click">
+        </Button>
+
+        <Button Name="DLSendMailButton"
+                Content="Send Mail"
+                Margin="530,20,19,564"
+                IsEnabled="False"
+                Click="DLSendMailButton_Click">
+        </Button>
+        -->
+
+        <ToolBar HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Height="35"
+                 Width="630">
+
+            <Label Content="Search:" Width="50" />
+
+            <TextBox Name="DLSearchTextbox"
+                    TextWrapping="Wrap"
+                    Text=""
+                    TextChanged="DLSearchTextbox_TextChanged"
+                    Width="350" />
+
+            <!--<Separator></Separator>
+            
+            <Button Name="DLSearchSubmitButton"
+                    Content="Search"
+                    Click="DLSearchSubmitButton_Click"
+                    Width="50" />-->
+
+            <Separator Margin="5"></Separator>
+
+            <Button Name="DLViewRecipientsButton"
+                    Content="View Recipients"
+                    Width="100"
+                    IsEnabled="False"
+                    Click="DLViewRecipientsButton_Click" />
+
+            <Separator Margin="5"></Separator>
+
+            <Button Name="DLSendMailButton"
+                    Content="Send Mail"
+                    IsEnabled="False"
+                    Width="70"
+                    Click="DLSendMailButton_Click" />
+        </ToolBar>
 
         <DataGrid Name="DLGrid"
-                  Grid.Row="2"
-                  Grid.RowSpan="20"
-                  Grid.Column="0"
-                  Grid.ColumnSpan="24"
+                  Margin="0,35"
                   AutoGenerateColumns="False"
                   SelectionMode="Extended"
                   IsReadOnly="True"
@@ -111,14 +101,16 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Name="DLSendMailButton"
-                Content="Send Mail"
-                Grid.Row="23"
-                Grid.RowSpan="1"
-                Grid.Column="21"
-                Grid.ColumnSpan="3"
-                IsEnabled="False"
-                Click="DLSendMailButton_Click">
-        </Button>
+        <StatusBar
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Height="35"
+            Width="629">
+
+            <Label Name="StatusBarLabel"
+                   Width="620"
+                   Content="Selected: 0"/>
+        </StatusBar>
+
     </Grid>
 </Window>

@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mailer\MailTemplate.cs" />
     <Compile Include="SelectMailTemplateWindow.xaml.cs">
       <DependentUpon>SelectMailTemplateWindow.xaml</DependentUpon>
     </Compile>

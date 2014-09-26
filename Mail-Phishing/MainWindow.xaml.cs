@@ -23,13 +23,16 @@ namespace Mail_Phishing
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<DistributionList> DLGridData;
+        public static List<DistributionList> DLGridData;
+        public static List<DistributionList> SelectedDLs;
         public static DistributionListUtil DLUtils = new DistributionListUtil();
         
 
         public MainWindow()
         {
             InitializeComponent();
+
+            SelectedDLs = new List<DistributionList>();
 
             DLGridData = GetDLGridData();
             DLGrid.ItemsSource = DLGridData;
@@ -46,6 +49,26 @@ namespace Mail_Phishing
             data = data.OrderBy(item => item.CN).ToList();
 
             return data;
+        }
+
+        private void UpdateStatusBarLabel(int selected = -1, int searchMatch = -1)
+        {
+            string statusBarLabelText = string.Empty;
+
+            //Handle default values
+            if(selected < 0) selected = DLGrid.SelectedItems.Count;
+            if(searchMatch < 0) searchMatch = (string.IsNullOrEmpty(DLSearchTextbox.Text) ? 0 :  DLGrid.Items.Count);
+
+            //Handle the presence or absence of a filtered collection of items
+            statusBarLabelText = String.Format("Selected: {0}", selected);
+
+            if (searchMatch > 0)
+            {
+                statusBarLabelText = String.Format("{0} | Search Match: {1}", statusBarLabelText, searchMatch);
+            }
+
+            //Bind the local status string to the status bar label
+            StatusBarLabel.Content = statusBarLabelText;
         }
 
         //private void SampleProgramCode()
@@ -94,20 +117,21 @@ namespace Mail_Phishing
         private void DLSearchTextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = DLSearchTextbox.Text;
-            
+
             if (!string.IsNullOrEmpty(searchText))
             {
-                var temp = DLGridData;
-
                 searchText = searchText.ToLower();
 
-                temp = temp.Where(item => item.CN.ToLower().Contains(searchText)).ToList();
+                var temp = DLGridData.Where(item => item.CN.ToLower().Contains(searchText)).ToList();
 
                 DLGrid.ItemsSource = temp;
+
+                UpdateStatusBarLabel(searchMatch: temp.Count);
             }
             else
             {
                 DLGrid.ItemsSource = DLGridData;
+                UpdateStatusBarLabel(searchMatch: 0);
             }
         }
 
@@ -121,16 +145,26 @@ namespace Mail_Phishing
             {
                 DLSendMailButton.IsEnabled = false;
             }
+
+            UpdateStatusBarLabel(selected: DLGrid.SelectedItems.Count);
         }
 
         private void DLSendMailButton_Click(object sender, RoutedEventArgs e)
         {
-            List<DistributionList> selectedDLs = new List<DistributionList>();
+            SelectedDLs = new List<DistributionList>();
 
             foreach (var dl in DLGrid.SelectedItems)
             {
-                selectedDLs.Add((DistributionList)dl);
+                SelectedDLs.Add((DistributionList)dl);
             }
+
+            SelectMailTemplateWindow window = new SelectMailTemplateWindow();
+            window.Show();
+        }
+
+        private void DLViewRecipientsButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
