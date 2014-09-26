@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
+using Mail_Phishing.DAL;
 using Mail_Phishing.Mailer;
 
 namespace Mail_Phishing
@@ -34,7 +36,7 @@ namespace Mail_Phishing
             mailTemplates = MailTemplate.GetMailTemplates();
 
             EmailTemplatesComboBox.ItemsSource = mailTemplates;
-            EmailTemplatesComboBox.DisplayMemberPath = "MailTitle";
+            EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
         }
 
 
@@ -44,19 +46,17 @@ namespace Mail_Phishing
             GetMembersEmail DLEmails = new GetMembersEmail(DLUtils.listDLMembers);
             GetMembersEmail DDLEmails = new GetMembersEmail(DLUtils.listDDLMembers);
 
-            //MailerUtil.GetDistributionListMembersDelegate dluHandler = new MailerUtil.GetDistributionListMembersDelegate(dlu.GetDistributionListMembers);
-
             //Calling It directly
             Func<string, List<string>> dluHandler = (param) => DLEmails(param);
             Func<string, List<string>> ddluHandler = (param) => DDLEmails(param);
-            //List<string> xxx = ddluHandler.Invoke("(&(physicalDeliveryOfficeName=MOA)(!(name=SystemMailbox{*))(!(name=CAS_{*))(!(msExchRecipientTypeDetails=16777216))(!(msExchRecipientTypeDetails=536870912))(!(msExchRecipientTypeDetails=8388608)))");
-
-            //dlu.GetDynamicDistributionLists();
-            //dlu.GetDistributionLists();
 
             //calling it through Mailer
             //MailerUtils.SendMail(ddluHandler, new object[] { "(&(physicalDeliveryOfficeName=MOA)(!(name=SystemMailbox{*))(!(name=CAS_{*))(!(msExchRecipientTypeDetails=16777216))(!(msExchRecipientTypeDetails=536870912))(!(msExchRecipientTypeDetails=8388608)))" });
 
+            //Get the selected mail template
+            MailTemplate template = EmailTemplatesComboBox.SelectedItem as MailTemplate;
+
+            //Get selected dls and fetch their users emails
             List<DistributionList> selectedDLs = new List<DistributionList>();
             List<string> emails = new List<string>();
 
@@ -71,6 +71,15 @@ namespace Mail_Phishing
                 else
                     emails.AddRange(DDLEmails(castedDL.FILORDN));
             }
+
+            //FINAL CODE
+            //foreach (var dl in selectedDLs)
+            //{
+            //    if(dl.DType.Equals(DLT.DL))
+            //        //MailerUtils.SendMail(dluHandler, new object[] { dl.FILORDN });
+            //    else
+            //        //MailerUtils.SendMail(ddluHandler, new object[] { dl.FILORDN });
+            //}
         }
 
         private void ListOfEmails_SelectionChanged(object sender, SelectionChangedEventArgs e)
