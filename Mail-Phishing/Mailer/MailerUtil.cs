@@ -21,7 +21,7 @@ namespace Mail_Phishing.Mailer
 
         public delegate List<string> GetDistributionListMembersDelegate(string DNORFILTER);
 
-        public void SenMail(string emailAddress, string templateSubject, string templateBody)
+        public void SendMail(string emailAddress, string templateSubject, string templateBody)
         {
             MailMessage mail = new MailMessage(notificationsEmail.Address, @emailAddress);
             client.Port = 25;
@@ -37,7 +37,7 @@ namespace Mail_Phishing.Mailer
             client.Send(mail);
         }
 
-        public void SenMail(Delegate method, params object[] args)
+        public void SendMail(Delegate method, params object[] args)
         {
             List<string> emailAddresses = (List<string>)method.DynamicInvoke(args);
             //List<string> emailAddresses = new List<string>();

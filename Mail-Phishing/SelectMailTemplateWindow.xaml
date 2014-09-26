@@ -11,25 +11,25 @@
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Width="629"
-                 Height="40">
+                 Height="35">
 
-            <Label Name="ListOfEmailsLabel"
+            <Label Name="EmailTemplatesComboBoxLabel"
                    Content="Email:"
                    Width="50" 
                    Height="25" />
 
-            <ComboBox Name="ListOfEmails"
-                      Height="30"
+            <ComboBox Name="EmailTemplatesComboBox"
+                      Height="25"
                       Width="300"
-                      SelectionChanged="ListOfEmails_SelectionChanged"
-                      ItemsSource=""/>
+                      SelectionChanged="ListOfEmails_SelectionChanged" />
             
             <Separator Margin="5"></Separator>
 
-            <Button Name="ConfirmSendMail"
+            <Button Name="ConfirmSendMailButton"
                     Content="Confirm"
                     Width="60"
-                    Click="ConfirmSendMail_Click"/>
+                    IsEnabled="False"
+                    Click="ConfirmSendMailButton_Click" />
         </ToolBar>
 
 
@@ -38,11 +38,21 @@
                   Margin="10,45,10,10">
 
             <InlineUIContainer FlowDirection="LeftToRight">
-                <TextBlock Name="ReviewEmailTextBlock"
-                           TextAlignment="Left"
+                <RichTextBox Name="ReviewEmailTextBlock"
                            Width="602"
-                           Height="462" />
+                           Height="462"
+                           IsReadOnly="True" />
+
+                <!--<WebBrowser Name="ReviewEmailHTMLBlock"
+                            Width="602"
+                            Height="462" />-->
             </InlineUIContainer>
         </GroupBox>
+        
+        <ListBox Name="SelectedDLsListBox"
+                 Visibility="Hidden"
+                 DisplayMemberPath="CN">
+                <!-- SelectionChanged="ListOfSelectedDLs_SelectionChanged"-->
+        </ListBox>
     </Grid>
 </Window>

@@ -7,43 +7,6 @@
         ResizeMode="NoResize">
 
     <Grid>
-        <!--
-        <GroupBox Name="SearchControlsGroup"
-                  Header="Search Distribution Lists" 
-                  Margin="10,0,228,554"/>
-
-        <TextBox Name="DLSearchTextbox"
-                 TextWrapping="Wrap"
-                 Text=""
-                 TextChanged="DLSearchTextbox_TextChanged"
-                 Margin="10,3,330,582">
-        </TextBox>
-
-        <Button Name="DLSearchSubmitButton"
-                Content="Search"
-                Click="DLSearchSubmitButton_Click"
-                Margin="322,21,242,563">
-        </Button>
-
-        <GroupBox Name="ToolsControlsGroup"
-                  Header="Tools"
-                  Margin="406,0,10,554"/>
-
-        <Button Name="DLViewRecipientsButton"
-                Content="View Recipients"
-                Margin="417,21,104,563"
-                IsEnabled="False"
-                Click="DLViewRecipientsButton_Click">
-        </Button>
-
-        <Button Name="DLSendMailButton"
-                Content="Send Mail"
-                Margin="530,20,19,564"
-                IsEnabled="False"
-                Click="DLSendMailButton_Click">
-        </Button>
-        -->
-
         <ToolBar HorizontalAlignment="Left"
                  VerticalAlignment="Top"
                  Height="35"
@@ -57,22 +20,15 @@
                     TextChanged="DLSearchTextbox_TextChanged"
                     Width="350" />
 
-            <!--<Separator></Separator>
-            
-            <Button Name="DLSearchSubmitButton"
-                    Content="Search"
-                    Click="DLSearchSubmitButton_Click"
-                    Width="50" />-->
-
-            <Separator Margin="5"></Separator>
+            <!--<Separator Margin="5"></Separator>
 
             <Button Name="DLViewRecipientsButton"
                     Content="View Recipients"
                     Width="100"
                     IsEnabled="False"
-                    Click="DLViewRecipientsButton_Click" />
+                    Click="DLViewRecipientsButton_Click" />-->
 
-            <Separator Margin="5"></Separator>
+            <Separator Margin="10,5,10,5"></Separator>
 
             <Button Name="DLSendMailButton"
                     Content="Send Mail"
