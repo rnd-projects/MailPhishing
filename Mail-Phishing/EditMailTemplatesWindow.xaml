@@ -1,0 +1,59 @@
+﻿<Window x:Class="Mail_Phishing.EditMailTemplatesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ISD Mail Phishing | Edit Mail Templates"
+        Height="540"
+        Width="635">
+    <Grid>
+        <ToolBar Name="SelectMailTemplateWindowToolbar"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Width="629"
+                 Height="35">
+
+            <Label Name="EmailTemplatesComboBoxLabel"
+                   Content="Email Template:"
+                   Width="100" 
+                   Height="25" />
+
+            <ComboBox Name="EmailTemplatesComboBox"
+                      Height="25"
+                      Width="300"
+                      SelectionChanged="EmailTemplatesComboBox_SelectionChanged" />
+
+            <Separator Margin="5"></Separator>
+
+            <Button Name="SaveChangesButton"
+                    Content="Save Changes"
+                    Width="85"
+                    IsEnabled="False"
+                    Click="SaveChangesButton_Click" />
+        </ToolBar>
+
+        <Label Name="EmailTemplateSubjectTextBoxLabel"
+               Content="Email Template Subject:"
+               Height="30"
+               Margin="10,50,472,430"/>
+
+        <TextBox Name="EmailTemplateSubjectTextBox"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Height="28" 
+                Width="462" 
+                Text="" 
+                TextWrapping="Wrap"
+                IsReadOnly="True"
+                Margin="155,52,0,0" />
+
+        <Label Name="EmailTemplateBodyRichTextBoxLabel"
+                Content="Email Template Body:"
+                Height="30"
+                Width="130"
+                Margin="10,85,487,395" />
+
+        <RichTextBox Name="EmailTemplateBodyRichTextBox"
+                IsReadOnly="True"
+                Margin="10,120,10,10"
+                Background="LightYellow" />
+    </Grid>
+</Window>

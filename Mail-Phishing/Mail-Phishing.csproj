@@ -85,6 +85,9 @@
     </ApplicationDefinition>
     <Compile Include="DAL\DBLib.cs" />
     <Compile Include="DAL\HelperFunctions.cs" />
+    <Compile Include="EditMailTemplatesWindow.xaml.cs">
+      <DependentUpon>EditMailTemplatesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LocalDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +97,10 @@
     <Compile Include="SelectMailTemplateWindow.xaml.cs">
       <DependentUpon>SelectMailTemplateWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditMailTemplatesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
