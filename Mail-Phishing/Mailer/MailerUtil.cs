@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Mail_Phishing.DAL;
 
 namespace Mail_Phishing.Mailer
 {
@@ -37,7 +38,7 @@ namespace Mail_Phishing.Mailer
             client.Send(mail);
         }
 
-        public void SendMail(Delegate method, params object[] args)
+        public void SendMail(Delegate method, MailTemplate template, params object[] args)
         {
             List<string> emailAddresses = (List<string>)method.DynamicInvoke(args);
             //List<string> emailAddresses = new List<string>();
@@ -49,19 +50,17 @@ namespace Mail_Phishing.Mailer
             //MailMessage mail = new MailMessage(notificationsEmail.Address, @emailAddress);
             if (emailAddresses.Count > 0)
             {
-
                 foreach (string emailAddress in emailAddresses)
                 {
-
                     MailMessage mail = new MailMessage(replyTo.Address, emailAddress);
 
                     mail.IsBodyHtml = true;
-                    mail.Subject = "this is a spam test";
-                    mail.Body = "this is a spam test ";
+                    mail.Subject = template.MailSubject;
+                    mail.Body = template.MailBody;
 
                     client.Send(mail);
                 }
-            }
+            }//end-if
 
         }
 

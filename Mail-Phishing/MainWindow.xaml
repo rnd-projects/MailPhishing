@@ -6,6 +6,22 @@
         Width="635"
         ResizeMode="NoResize">
 
+    <Window.Resources>
+        <Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border Background="#CD222120" CornerRadius="7, 7, 8, 8" BorderBrush="DarkGray" BorderThickness="2" Opacity="0.96">
+                            <StackPanel ClipToBounds="True" Orientation="Vertical" IsItemsHost="True" Margin="5,4,5,4"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <ToolBar HorizontalAlignment="Left"
                  VerticalAlignment="Top"
@@ -35,6 +51,36 @@
                     IsEnabled="False"
                     Width="70"
                     Click="DLSendMailButton_Click" />
+
+            <Separator Margin="10,5,10,5"></Separator>
+            
+            <Label Content="Settings"></Label>
+            
+            <Button  Name="SettingsDropDownButton"
+                     Height="25"
+                     Width="25" 
+                     Click="SettingsDropDownButton_Click"
+                     Margin="0,2,0,0">
+                
+                <Button.Content>
+                    <Path x:Name="BtnArrow"
+                          Margin="0" 
+                          Width="10" 
+                          Fill="#FF527DB5" 
+                          Stretch="Uniform" 
+                          Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "/>
+                </Button.Content>
+                
+                <Button.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Name="EditMailTemplatesButton"
+                                  Foreground="Snow"
+                                  Header="Edit Mail Templates"
+                                  Click="EditMailTemplatesButton_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
         </ToolBar>
 
         <DataGrid Name="DLGrid"

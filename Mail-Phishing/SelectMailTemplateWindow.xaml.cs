@@ -63,7 +63,6 @@ namespace Mail_Phishing
             foreach (var dl in SelectedDLsListBox.Items)
             {
                 var castedDL = (DistributionList)dl;
-
                 selectedDLs.Add(castedDL);
 
                 if (castedDL.DType.Equals(DLT.DL))
@@ -76,9 +75,9 @@ namespace Mail_Phishing
             //foreach (var dl in selectedDLs)
             //{
             //    if(dl.DType.Equals(DLT.DL))
-            //        //MailerUtils.SendMail(dluHandler, new object[] { dl.FILORDN });
+            //        MailerUtils.SendMail(dluHandler, template, new object[] { dl.FILORDN });
             //    else
-            //        //MailerUtils.SendMail(ddluHandler, new object[] { dl.FILORDN });
+            //        MailerUtils.SendMail(ddluHandler, template, new object[] { dl.FILORDN });
             //}
         }
 
