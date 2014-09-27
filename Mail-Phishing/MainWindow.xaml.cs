@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using Mail_Phishing.Mailer;
+using Mail_Phishing.DAL;
 
 namespace Mail_Phishing
 {
@@ -155,7 +156,12 @@ namespace Mail_Phishing
 
         private void EditMailTemplatesButton_Click(object sender, RoutedEventArgs e)
         {
+            //ORIGINAL MAIL SUBJECT is "SAMPLE MAIL 001"
 
+            //var template = MailTemplate.GetMailTemplates().First();
+            //template.MailSubject = template.MailSubject + (" --upd");
+
+            //bool status = MailTemplate.UpdateMailTemplate(template);
         }
 
     }

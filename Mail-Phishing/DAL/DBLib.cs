@@ -62,5 +62,53 @@ namespace Mail_Phishing.DAL
 
             return dt;
         }
-    }
+
+
+        public bool UpdateMailTemplateRecord(int templateID, Dictionary<string, object> values)
+        {
+            string updateQuery = string.Empty;
+            string tableName = "MailTemplates";
+            string tableIDFieldName = "ID";
+            StringBuilder fieldsValues = new StringBuilder();
+
+            foreach (KeyValuePair<string, object> pair in values)
+            {
+                Type valueType = pair.Value.GetType();
+
+                if (valueType == typeof(int) || valueType == typeof(Double))
+                {
+                    fieldsValues.Append("[" + pair.Key + "]=" + pair.Value + ",");
+                }
+                else
+                {
+                    fieldsValues.Append("[" + pair.Key + "]=" + "'" + pair.Value + "'" + ",");
+                }
+            }
+
+            fieldsValues.Remove(fieldsValues.Length - 1, 1);
+
+            updateQuery = String.Format("UPDATE {0} SET {1} WHERE {2}={3}", tableName, fieldsValues, tableIDFieldName, templateID);
+
+            SqlCeConnection conn = DBInitializeConnection(ConnectionString);
+            SqlCeCommand comm = new SqlCeCommand(updateQuery, conn);
+            
+            try
+            {
+                conn.Open();
+                comm.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.ArgumentException argEx = new System.ArgumentException("Exception", "ex", ex);
+                throw argEx;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+    }//end-class
+
 }

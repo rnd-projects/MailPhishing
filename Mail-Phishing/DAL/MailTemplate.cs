@@ -65,5 +65,28 @@ namespace Mail_Phishing.DAL
 
             return templates;
         }
+
+        public static bool UpdateMailTemplate(MailTemplate template)
+        {
+            bool status = false;
+            Dictionary<string, object> updateValues = new Dictionary<string, object>();
+
+            if (template != null)
+            {
+                if (!string.IsNullOrEmpty(template.MailSubject))
+                {
+                    updateValues.Add("MailSubject", template.MailSubject);
+                }
+
+                if (!string.IsNullOrEmpty(template.MailBody))
+                {
+                    updateValues.Add("MailBody", template.MailBody);
+                }
+
+                status = DBRoutines.UpdateMailTemplateRecord(template.ID, updateValues);
+            }
+
+            return status;
+        }
     }
 }
