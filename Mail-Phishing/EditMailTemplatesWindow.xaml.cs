@@ -79,10 +79,11 @@ namespace Mail_Phishing
         private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
         {
             bool status = false;
-            string mailSubjectText;
-            string mailBodyTextRange;
+            string mailSubjectText = string.Empty;
+            string mailBodyText = string.Empty;
             MailTemplate selectedTemplate;
-            
+            char[] disallowedCharacters = new char[] { '\r', '\n', '\t' };
+
             if(EmailTemplatesComboBox.SelectedIndex > -1)
             {
                 // Lock the controls
@@ -97,15 +98,17 @@ namespace Mail_Phishing
                     EmailTemplateBodyRichTextBox.Document.ContentEnd
                 );
 
-                mailBodyTextRange = textRange.Text.Trim();
+                mailBodyText = textRange.Text.Trim();
+                string[] tempStringArray = mailBodyText.Split(disallowedCharacters, StringSplitOptions.RemoveEmptyEntries);
+                mailBodyText = String.Join(" ", tempStringArray);
 
-                if (!string.IsNullOrEmpty(mailSubjectText) && !string.IsNullOrEmpty(mailBodyTextRange))
+                if (!string.IsNullOrEmpty(mailSubjectText) && !string.IsNullOrEmpty(mailBodyText))
                 {
                     // Update the mail templates
                     selectedTemplate = EmailTemplatesComboBox.SelectedItem as MailTemplate;
 
                     selectedTemplate.MailSubject = mailSubjectText;
-                    selectedTemplate.MailBody = mailBodyTextRange;
+                    selectedTemplate.MailBody = mailBodyText;
 
                     status = MailTemplate.UpdateMailTemplate(selectedTemplate);
 
