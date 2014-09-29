@@ -121,11 +121,6 @@
     <Compile Include="EditMailTemplatesWindow.xaml.cs">
       <DependentUpon>EditMailTemplatesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LocalDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LocalDBDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="DAL\MailTemplateItem.cs" />
     <Compile Include="LocalDbModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -190,17 +185,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="LocalDBDataSet.xsc">
-      <DependentUpon>LocalDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="LocalDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>LocalDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="LocalDBDataSet.xss">
-      <DependentUpon>LocalDBDataSet.xsd</DependentUpon>
-    </None>
     <EntityDeploy Include="LocalDbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LocalDbModel.Designer.cs</LastGenOutput>
@@ -253,9 +237,6 @@
       <ProductName>SQL Server Compact 4.0 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LocalDB.sdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
