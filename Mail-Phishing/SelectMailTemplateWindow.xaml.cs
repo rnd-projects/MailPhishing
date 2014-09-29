@@ -23,7 +23,9 @@ namespace Mail_Phishing
     /// </summary>
     public partial class SelectMailTemplateWindow : Window
     {
-        private List<MailTemplateItem> mailTemplates;
+        private LocalDbContext _db = new LocalDbContext();
+        private System.Windows.Data.CollectionViewSource mailTemplateViewSource;
+
         private static MailerUtil MailerUtils = new MailerUtil();
         private static DistributionListUtil DLUtils = new DistributionListUtil();
         private delegate List<string> GetMembersEmail(string DNORFILTER);
@@ -32,11 +34,23 @@ namespace Mail_Phishing
         public SelectMailTemplateWindow()
         {
             InitializeComponent();
+        }
 
-            mailTemplates = MailTemplateItem.GetMailTemplates();
 
-            EmailTemplatesComboBox.ItemsSource = mailTemplates;
-            EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (mailTemplateViewSource == null)
+            {
+                mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
+                // Load data by setting the CollectionViewSource.Source property:
+                // mailTemplateViewSource.Source = [generic data source]
+
+                _db.MailTemplates.Load();
+            }
+
+            //_db.MailTemplates.Load();
+
+            mailTemplateViewSource.Source = _db.MailTemplates.Local;
         }
 
 
@@ -100,9 +114,6 @@ namespace Mail_Phishing
             }
         }
 
-        private void ListOfSelectedDLs_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
+
 }

@@ -121,7 +121,6 @@
     <Compile Include="EditMailTemplatesWindow.xaml.cs">
       <DependentUpon>EditMailTemplatesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MailTemplateItem.cs" />
     <Compile Include="LocalDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

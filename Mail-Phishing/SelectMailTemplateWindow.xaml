@@ -1,54 +1,70 @@
-﻿<Window x:Class="Mail_Phishing.SelectMailTemplateWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ISD Mail Phishing | Confirm Email"
-        Height="567"
-        Width="635"
-        ResizeMode="NoResize">
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:DAL="clr-namespace:Mail_Phishing.DAL" mc:Ignorable="d"
+    x:Class="Mail_Phishing.SelectMailTemplateWindow"
+    Title="ISD Mail Phishing | Confirm Email"
+    Height="567"
+    Width="635"
+    ResizeMode="NoResize"
+    Loaded="Window_Loaded">
 
-    <Grid>
-        <ToolBar Name="SelectMailTemplateWindowToolbar"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Width="629"
-                 Height="35">
+    <Window.Resources>
+        <CollectionViewSource x:Key="mailTemplateViewSource" d:DesignSource="{d:DesignInstance {x:Type DAL:MailTemplate}, CreateList=True}"/>
+    </Window.Resources>
 
-            <Label Name="EmailTemplatesComboBoxLabel"
-                   Content="Email:"
-                   Width="50" 
-                   Height="25" />
+    <Grid DataContext="{StaticResource mailTemplateViewSource}">
+        <ToolBar x:Name="SelectMailTemplateWindowToolbar"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Top"
+			Width="629"
+			Height="35">
 
-            <ComboBox Name="EmailTemplatesComboBox"
-                      Height="25"
-                      Width="300"
-                      SelectionChanged="ListOfEmails_SelectionChanged" />
-            
-            <Separator Margin="5"></Separator>
+            <Label x:Name="EmailTemplatesComboBoxLabel"
+				Content="Email:"
+				Width="50" 
+				Height="25" />
 
-            <Button Name="ConfirmSendMailButton"
-                    Content="Confirm"
-                    Width="60"
-                    IsEnabled="False"
-                    Click="ConfirmSendMailButton_Click" />
+            <ComboBox x:Name="EmailTemplatesComboBox"
+				Height="25"
+				Width="300"
+                ItemsSource="{Binding}"
+				SelectionChanged="ListOfEmails_SelectionChanged"
+                DisplayMemberPath="MailSubject" />
+
+            <Separator Margin="5"/>
+
+            <Button x:Name="ConfirmSendMailButton"
+				Content="Confirm"
+				Width="60"
+				IsEnabled="False"
+				Click="ConfirmSendMailButton_Click" />
         </ToolBar>
 
 
-        <GroupBox Name="ReviewEmailBodyGroup"
-                  Header="Review Email"
-                  Margin="10,45,10,10">
+        <GroupBox x:Name="ReviewEmailBodyGroup"
+			Header="Review Email"
+			Margin="10,45,10,10">
 
             <InlineUIContainer FlowDirection="LeftToRight">
-                <RichTextBox Name="ReviewEmailTextBlock"
-                           Width="602"
-                           Height="462"
-                           IsReadOnly="True" />
+                <RichTextBox x:Name="ReviewEmailTextBlock"
+					Width="602"
+					Height="462"
+					IsReadOnly="True" />
             </InlineUIContainer>
         </GroupBox>
-        
-        <ListBox Name="SelectedDLsListBox"
-                 Visibility="Hidden"
-                 DisplayMemberPath="CN">
-                <!-- SelectionChanged="ListOfSelectedDLs_SelectionChanged"-->
+
+        <ListBox x:Name="SelectedDLsListBox"
+			Visibility="Hidden"
+			DisplayMemberPath="CN">
         </ListBox>
+        
+        <!--<DataGrid x:Name="mailTemplateDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="179,42,50,297" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="mailBodyColumn" Binding="{Binding MailBody}" Header="Mail Body" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="mailSubjectColumn" Binding="{Binding MailSubject}" Header="Mail Subject" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
     </Grid>
 </Window>
