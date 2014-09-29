@@ -40,14 +40,6 @@ namespace Mail_Phishing
             DLGrid.ItemsSource = DLGridData;
         }
 
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Initializes database upon object-creation
-            dbInitializer = new InitializeDatabase();
-        }
-
-
         private List<DistributionList> GetDLGridData()
         {
             List<DistributionList> data = new List<DistributionList>();
