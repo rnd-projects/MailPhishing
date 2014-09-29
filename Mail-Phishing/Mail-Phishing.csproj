@@ -114,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateNewMailTemplateWindow.xaml.cs">
+      <DependentUpon>CreateNewMailTemplateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\InitializeDatabase.cs" />
     <Compile Include="DAL\LocalDbContext.cs" />
     <Compile Include="DAL\MailTemplate.cs" />
     <Compile Include="EditMailTemplatesWindow.xaml.cs">
@@ -140,6 +144,10 @@
     <Compile Include="SelectMailTemplateWindow.xaml.cs">
       <DependentUpon>SelectMailTemplateWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="CreateNewMailTemplateWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditMailTemplatesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

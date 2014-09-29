@@ -4,7 +4,8 @@
         Title="ISD Mail Phishing | Select Distribution List"
         Height="645"
         Width="635"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
 
     <Window.Resources>
         <Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}">
@@ -72,7 +73,12 @@
                 </Button.Content>
                 
                 <Button.ContextMenu>
-                    <ContextMenu >
+                    <ContextMenu>
+                        <MenuItem Name="CreateNewMailTemplatesButton"
+                                  Foreground="Snow"
+                                  Header="Create Mail Template"
+                                  Click="CreateNewMailTemplatesButton_Click" />
+                        
                         <MenuItem Name="EditMailTemplatesButton"
                                   Foreground="Snow"
                                   Header="Edit Mail Templates"

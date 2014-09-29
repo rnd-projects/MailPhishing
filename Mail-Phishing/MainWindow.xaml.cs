@@ -24,6 +24,7 @@ namespace Mail_Phishing
     /// </summary>
     public partial class MainWindow : Window
     {
+        private InitializeDatabase dbInitializer;
         public static List<DistributionList> DLGridData;
         public static List<DistributionList> SelectedDLs;
         public static DistributionListUtil DLUtils = new DistributionListUtil();
@@ -37,6 +38,13 @@ namespace Mail_Phishing
 
             DLGridData = GetDLGridData();
             DLGrid.ItemsSource = DLGridData;
+        }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Initializes database upon object-creation
+            dbInitializer = new InitializeDatabase();
         }
 
 
@@ -162,6 +170,12 @@ namespace Mail_Phishing
             //bool status = MailTemplate.UpdateMailTemplate(template);
 
             EditMailTemplatesWindow window = new EditMailTemplatesWindow();
+            window.ShowDialog();
+        }
+
+        private void CreateNewMailTemplatesButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewMailTemplateWindow window = new CreateNewMailTemplateWindow();
             window.ShowDialog();
         }
 
