@@ -23,7 +23,7 @@ namespace Mail_Phishing
     /// </summary>
     public partial class SelectMailTemplateWindow : Window
     {
-        private List<MailTemplate> mailTemplates;
+        private List<MailTemplateItem> mailTemplates;
         private static MailerUtil MailerUtils = new MailerUtil();
         private static DistributionListUtil DLUtils = new DistributionListUtil();
         private delegate List<string> GetMembersEmail(string DNORFILTER);
@@ -33,7 +33,7 @@ namespace Mail_Phishing
         {
             InitializeComponent();
 
-            mailTemplates = MailTemplate.GetMailTemplates();
+            mailTemplates = MailTemplateItem.GetMailTemplates();
 
             EmailTemplatesComboBox.ItemsSource = mailTemplates;
             EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
