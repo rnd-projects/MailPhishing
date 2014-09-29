@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>WpfRichText</id>
+    <version>1.0.16.2</version>
+    <title>WPF RichText Editor</title>
+    <authors>axel.scheiwe</authors>
+    <owners>axel.scheiwe</owners>
+    <projectUrl>https://github.com/AfterbuyAxel/WPF-RichText-Editor</projectUrl>
+    <iconUrl>https://raw.github.com/AfterbuyAxel/WPF-RichText-Editor/master/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WPF RichText Editor Control with conversion from and to HTML (XAML)</description>
+    <summary>Bindable WPF WYSIWYG Text Editor</summary>
+    <releaseNotes>1.0.16: 
+- update of Xceed Toolkit</releaseNotes>
+    <copyright />
+    <language>en-US</language>
+    <tags>WPF RichTextEditor HTML XAML</tags>
+    <dependencies>
+      <dependency id="Extended.Wpf.Toolkit" version="2.0.0" />
+    </dependencies>
+  </metadata>
+</package>
