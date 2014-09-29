@@ -115,8 +115,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\LocalDbContext.cs" />
-    <Compile Include="DAL\DBLib.cs" />
-    <Compile Include="DAL\HelperFunctions.cs" />
     <Compile Include="DAL\MailTemplate.cs" />
     <Compile Include="EditMailTemplatesWindow.xaml.cs">
       <DependentUpon>EditMailTemplatesWindow.xaml</DependentUpon>
