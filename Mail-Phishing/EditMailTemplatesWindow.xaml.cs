@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity; 
 
 using Mail_Phishing.DAL;
 
@@ -21,16 +22,26 @@ namespace Mail_Phishing
     /// </summary>
     public partial class EditMailTemplatesWindow : Window
     {
-        public List<MailTemplate> MailTemplates;
+        private LocalDbContext _db = new LocalDbContext();
 
         public EditMailTemplatesWindow()
         {
             InitializeComponent();
 
-            MailTemplates = MailTemplate.GetMailTemplates();
+            //MailTemplates = MailTemplate.GetMailTemplates();
+            //EmailTemplatesComboBox.ItemsSource = MailTemplates;
+            //EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
+        }
 
-            EmailTemplatesComboBox.ItemsSource = MailTemplates;
-            EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Data.CollectionViewSource mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // mailTemplateViewSource.Source = [generic data source]
+
+            _db.MailTemplates.Load();
+
+            mailTemplateViewSource.Source = _db.MailTemplates.Local;
         }
 
         private void LockWindowControls()
@@ -45,16 +56,6 @@ namespace Mail_Phishing
             SaveChangesButton.IsEnabled = true;
             EmailTemplateSubjectTextBox.IsReadOnly = false;
             EmailTemplateBodyRichTextBox.IsReadOnly = false;
-        }
-
-        private void RefreshWindowsControls()
-        {
-            MailTemplates = MailTemplate.GetMailTemplates();
-
-            EmailTemplatesComboBox.ItemsSource = MailTemplates;
-            EmailTemplateSubjectTextBox.Text = string.Empty;
-            EmailTemplateBodyRichTextBox.Document.Blocks.Clear();
-            EmailTemplateBodyRichTextBox.AppendText(string.Empty);
         }
 
         private void EmailTemplatesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,12 +111,8 @@ namespace Mail_Phishing
                     selectedTemplate.MailSubject = mailSubjectText;
                     selectedTemplate.MailBody = mailBodyText;
 
-                    status = MailTemplate.UpdateMailTemplate(selectedTemplate);
-
-                    if (status == true)
-                    {
-                        RefreshWindowsControls();
-                    }
+                    _db.Entry<MailTemplate>(selectedTemplate).State = EntityState.Modified;
+                    _db.SaveChanges();
                 }
 
                 // UnLock the controls
