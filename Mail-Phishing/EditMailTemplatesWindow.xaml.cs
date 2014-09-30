@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.Entity; 
+//using System.Data.Entity; 
 
 using Mail_Phishing.DAL;
 
@@ -22,7 +22,7 @@ namespace Mail_Phishing
     /// </summary>
     public partial class EditMailTemplatesWindow : Window
     {
-        private LocalDbContext _db = new LocalDbContext();
+        private LocalServiceDbContext _db = new LocalServiceDbContext();
 
         public EditMailTemplatesWindow()
         {
@@ -39,9 +39,9 @@ namespace Mail_Phishing
             // Load data by setting the CollectionViewSource.Source property:
             // mailTemplateViewSource.Source = [generic data source]
 
-            _db.MailTemplates.Load();
+            //_db.MailTemplates.Load();
 
-            mailTemplateViewSource.Source = _db.MailTemplates.Local;
+            //mailTemplateViewSource.Source = _db.MailTemplates.Local;
         }
 
         private void LockWindowControls()
@@ -111,8 +111,8 @@ namespace Mail_Phishing
                     selectedTemplate.MailSubject = mailSubjectText;
                     selectedTemplate.MailBody = mailBodyText;
 
-                    _db.Entry<MailTemplate>(selectedTemplate).State = EntityState.Modified;
-                    _db.SaveChanges();
+                    //_db.Entry<MailTemplate>(selectedTemplate).State = EntityState.Modified;
+                    //_db.SaveChanges();
                 }
 
                 // UnLock the controls

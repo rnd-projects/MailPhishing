@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Mail_Phishing.DAL
 {
-    class MailTemplate
+    public class MailTemplate
     {
         public int ID { get; set; }
         public string MailSubject { get; set; }

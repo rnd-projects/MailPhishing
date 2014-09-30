@@ -8,25 +8,25 @@ namespace Mail_Phishing.DAL
 {
     class InitializeDatabase
     {
-        private LocalDbContext _db = new LocalDbContext();
+        private LocalServiceDbContext _db = new LocalServiceDbContext();
         private List<MailTemplate> mailTemplates = new List<MailTemplate>();
 
         //
         // Constructor
         public InitializeDatabase()
         {
-            mailTemplates = _db.MailTemplates.Local.ToList();
+            //mailTemplates = _db.MailTemplates.Local.ToList();
 
-            if (mailTemplates.Count == 0)
-            {
-                mailTemplates = GetSampleMailTemplates();
+            //if (mailTemplates.Count == 0)
+            //{
+            //    mailTemplates = GetSampleMailTemplates();
 
-                foreach (var template in mailTemplates)
-                {
-                    _db.MailTemplates.AddRange(mailTemplates);
-                    _db.SaveChanges();
-                }
-            }
+            //    foreach (var template in mailTemplates)
+            //    {
+            //        _db.MailTemplates.AddRange(mailTemplates);
+            //        _db.SaveChanges();
+            //    }
+            //}
         }
 
         //

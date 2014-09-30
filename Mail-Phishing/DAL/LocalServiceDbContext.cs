@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity; 
+//using System.Data.Entity; 
 
 namespace Mail_Phishing.DAL
 {
-    class LocalDbContext : DbContext
+    class LocalServiceDbContext //: DbContext
     {
-        public DbSet<MailTemplate> MailTemplates { get; set; } 
+        //public DbSet<MailTemplate> MailTemplates { get; set; } 
     }
 }
