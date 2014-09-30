@@ -24,7 +24,7 @@ namespace Mail_Phishing
     /// </summary>
     public partial class MainWindow : Window
     {
-        private InitializeDatabase dbInitializer;
+        //private InitializeDatabase dbInitializer;
         public static List<DistributionList> DLGridData;
         public static List<DistributionList> SelectedDLs;
         public static DistributionListUtil DLUtils = new DistributionListUtil();

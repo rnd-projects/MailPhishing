@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.Entity; 
+//using System.Data.Entity; 
 
 using Mail_Phishing.DAL;
 
@@ -22,7 +22,8 @@ namespace Mail_Phishing
     /// </summary>
     public partial class CreateNewMailTemplateWindow : Window
     {
-        private LocalDbContext _db = new LocalDbContext();
+        System.Windows.Data.CollectionViewSource mailTemplateViewSource;
+
 
         public CreateNewMailTemplateWindow()
         {
@@ -31,7 +32,12 @@ namespace Mail_Phishing
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _db.MailTemplates.Load();
+            if (mailTemplateViewSource == null)
+            {
+                mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
+            }
+
+            mailTemplateViewSource.Source = MailTemplate.GetMailTemplates();
         }
 
         private void LockWindowControls()
@@ -80,8 +86,7 @@ namespace Mail_Phishing
                 newTemplate.MailSubject = mailSubjectText;
                 newTemplate.MailBody = mailBodyText;
 
-                _db.MailTemplates.Add(newTemplate);
-                _db.SaveChanges();
+                MailTemplate.AdddMailTemplate(newTemplate);
             }
 
             // UnLock the controls

@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.Entity;
+//using System.Data.Entity;
 
 using Mail_Phishing.DAL;
 using Mail_Phishing.Mailer;
@@ -23,8 +23,7 @@ namespace Mail_Phishing
     /// </summary>
     public partial class SelectMailTemplateWindow : Window
     {
-        private LocalDbContext _db = new LocalDbContext();
-        private System.Windows.Data.CollectionViewSource mailTemplateViewSource;
+        System.Windows.Data.CollectionViewSource mailTemplateViewSource;
 
         private static MailerUtil MailerUtils = new MailerUtil();
         private static DistributionListUtil DLUtils = new DistributionListUtil();
@@ -42,15 +41,9 @@ namespace Mail_Phishing
             if (mailTemplateViewSource == null)
             {
                 mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
-                // Load data by setting the CollectionViewSource.Source property:
-                // mailTemplateViewSource.Source = [generic data source]
-
-                _db.MailTemplates.Load();
             }
 
-            //_db.MailTemplates.Load();
-
-            mailTemplateViewSource.Source = _db.MailTemplates.Local;
+            mailTemplateViewSource.Source = MailTemplate.GetMailTemplates();
         }
 
 
