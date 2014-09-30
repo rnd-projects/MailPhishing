@@ -22,26 +22,22 @@ namespace Mail_Phishing
     /// </summary>
     public partial class EditMailTemplatesWindow : Window
     {
-        private LocalServiceDbContext _db = new LocalServiceDbContext();
+        System.Windows.Data.CollectionViewSource mailTemplateViewSource;
+
 
         public EditMailTemplatesWindow()
         {
             InitializeComponent();
-
-            //MailTemplates = MailTemplate.GetMailTemplates();
-            //EmailTemplatesComboBox.ItemsSource = MailTemplates;
-            //EmailTemplatesComboBox.DisplayMemberPath = "MailSubject";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            System.Windows.Data.CollectionViewSource mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // mailTemplateViewSource.Source = [generic data source]
-
-            //_db.MailTemplates.Load();
-
-            //mailTemplateViewSource.Source = _db.MailTemplates.Local;
+            if (mailTemplateViewSource == null)
+            {
+                mailTemplateViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("mailTemplateViewSource")));
+            }
+            
+            mailTemplateViewSource.Source = MailTemplate.GetMailTemplates();
         }
 
         private void LockWindowControls()
@@ -101,7 +97,7 @@ namespace Mail_Phishing
 
                 mailBodyText = textRange.Text.Trim();
                 string[] tempStringArray = mailBodyText.Split(disallowedCharacters, StringSplitOptions.RemoveEmptyEntries);
-                mailBodyText = String.Join(" ", tempStringArray);
+                mailBodyText = String.Join("<br />", tempStringArray);
 
                 if (!string.IsNullOrEmpty(mailSubjectText) && !string.IsNullOrEmpty(mailBodyText))
                 {
@@ -111,8 +107,9 @@ namespace Mail_Phishing
                     selectedTemplate.MailSubject = mailSubjectText;
                     selectedTemplate.MailBody = mailBodyText;
 
-                    //_db.Entry<MailTemplate>(selectedTemplate).State = EntityState.Modified;
-                    //_db.SaveChanges();
+                    status = MailTemplate.EditMailTemplate(selectedTemplate);
+
+                    mailTemplateViewSource.Source = MailTemplate.GetMailTemplates();
                 }
 
                 // UnLock the controls

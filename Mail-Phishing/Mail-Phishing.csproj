@@ -71,16 +71,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Management" />
@@ -133,9 +143,10 @@
     <Compile Include="CreateNewMailTemplateWindow.xaml.cs">
       <DependentUpon>CreateNewMailTemplateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DAL\InitializeDatabase.cs" />
-    <Compile Include="DAL\LocalServiceDbContext.cs" />
+    <Compile Include="DAL\DBlib.cs" />
+    <Compile Include="DAL\Helpers.cs" />
     <Compile Include="DAL\MailTemplate.cs" />
+    <Compile Include="DAL\TablesInfo.cs" />
     <Compile Include="EditMailTemplatesWindow.xaml.cs">
       <DependentUpon>EditMailTemplatesWindow.xaml</DependentUpon>
     </Compile>
