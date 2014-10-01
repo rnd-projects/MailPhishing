@@ -5,6 +5,7 @@
     Title="ISD Mail Phishing | Edit Mail Templates"
     Height="540"
     Width="635"
+    ResizeMode="NoResize"
     Loaded="Window_Loaded">
     
     <Window.Resources>

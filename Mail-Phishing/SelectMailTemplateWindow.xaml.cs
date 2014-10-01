@@ -47,8 +47,24 @@ namespace Mail_Phishing
         }
 
 
+        private void LockWindowControls()
+        {
+            EmailTemplatesComboBox.IsEnabled = false;
+            ConfirmSendMailButton.IsEnabled = false;
+        }
+
+        private void UnlockWindowControls()
+        {
+            EmailTemplatesComboBox.IsEnabled = true;
+            ConfirmSendMailButton.IsEnabled = true;
+        }
+
+
         private void ConfirmSendMailButton_Click(object sender, RoutedEventArgs e)
         {
+            //Lock the controls first
+            LockWindowControls();
+
             //create appropriate functions for DL and DDL
             GetMembersEmail DLEmails = new GetMembersEmail(DLUtils.listDLMembers);
             GetMembersEmail DDLEmails = new GetMembersEmail(DLUtils.listDDLMembers);
@@ -79,13 +95,23 @@ namespace Mail_Phishing
             }
 
             //FINAL CODE
-            //foreach (var dl in selectedDLs)
-            //{
-            //    if(dl.DType.Equals(DLT.DL))
-            //        MailerUtils.SendMail(dluHandler, template, new object[] { dl.FILORDN });
-            //    else
-            //        MailerUtils.SendMail(ddluHandler, template, new object[] { dl.FILORDN });
-            //}
+            foreach (var dl in selectedDLs)
+            {
+                if (dl.DType.Equals(DLT.DL))
+                {
+                    MailerUtils.SendMail(dluHandler, template, new object[] { dl.FILORDN });
+                }
+                else
+                {
+                    MailerUtils.SendMail(ddluHandler, template, new object[] { dl.FILORDN });
+                }
+            }
+
+            //Show message box
+            MessageBox.Show("Emails were sent successfully.", "ISD Mail Phishing", MessageBoxButton.OK);
+
+            //Unlock the windows controls
+            UnlockWindowControls();
         }
 
         private void ListOfEmails_SelectionChanged(object sender, SelectionChangedEventArgs e)

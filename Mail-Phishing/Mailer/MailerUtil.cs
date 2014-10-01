@@ -17,14 +17,18 @@ namespace Mail_Phishing.Mailer
     {
         private SmtpClient client = new SmtpClient();
         private string mailhost = ConfigurationManager.AppSettings["MailHost"];
-        private MailAddress notificationsEmail = new MailAddress(ConfigurationManager.AppSettings["NotificationsEmail"]);
         private MailAddress replyTo = new MailAddress(ConfigurationManager.AppSettings["ReplyTo"]);
-
+        private string emailDisplayName = Convert.ToString(ConfigurationManager.AppSettings["SenderDisplayName"]);
+        
         public delegate List<string> GetDistributionListMembersDelegate(string DNORFILTER);
+
 
         public void SendMail(string emailAddress, string templateSubject, string templateBody)
         {
-            MailMessage mail = new MailMessage(notificationsEmail.Address, @emailAddress);
+            MailAddress from = new MailAddress(replyTo.Address, emailDisplayName);
+            MailAddress to = new MailAddress(@emailAddress);
+            MailMessage mail = new MailMessage(from, to);
+
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
@@ -41,21 +45,18 @@ namespace Mail_Phishing.Mailer
         public void SendMail(Delegate method, MailTemplate template, params object[] args)
         {
             List<string> emailAddresses = (List<string>)method.DynamicInvoke(args);
-            //List<string> emailAddresses = new List<string>();
+
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Host = mailhost;
 
-            //MailMessage mail = new MailMessage(notificationsEmail.Address, @emailAddress);
-
             if (emailAddresses.Count > 0)
             {
-                MailAddress from = new MailAddress(replyTo.Address, "MOA Helpdesk");
+                MailAddress from = new MailAddress(replyTo.Address, emailDisplayName);
 
                 foreach (string emailAddress in emailAddresses)
                 {
-                    
                     MailAddress to = new MailAddress(emailAddress);
                     MailMessage mail = new MailMessage(from,to);
 

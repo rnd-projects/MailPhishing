@@ -110,6 +110,8 @@ namespace Mail_Phishing
                     status = MailTemplate.EditMailTemplate(selectedTemplate);
 
                     mailTemplateViewSource.Source = MailTemplate.GetMailTemplates();
+
+                    MessageBox.Show("Changes were saved successfully.", "ISD Mail Phishing", MessageBoxButton.OK);
                 }
 
                 // UnLock the controls
