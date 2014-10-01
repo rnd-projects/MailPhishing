@@ -48,11 +48,16 @@ namespace Mail_Phishing.Mailer
             client.Host = mailhost;
 
             //MailMessage mail = new MailMessage(notificationsEmail.Address, @emailAddress);
+
             if (emailAddresses.Count > 0)
             {
+                MailAddress from = new MailAddress(replyTo.Address, "MOA Helpdesk");
+
                 foreach (string emailAddress in emailAddresses)
                 {
-                    MailMessage mail = new MailMessage(replyTo.Address, emailAddress);
+                    
+                    MailAddress to = new MailAddress(emailAddress);
+                    MailMessage mail = new MailMessage(from,to);
 
                     mail.IsBodyHtml = true;
                     mail.Subject = template.MailSubject;
