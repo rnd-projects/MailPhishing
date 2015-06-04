@@ -64,7 +64,7 @@ namespace Mail_Phishing.Mailer
                     mail.Subject = template.MailSubject;
                     mail.Body = template.MailBody;
 
-                    client.Send(mail);
+                    //client.Send(mail);
                 }
             }//end-if
 

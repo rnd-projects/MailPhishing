@@ -83,29 +83,57 @@ namespace Mail_Phishing
             List<DistributionList> selectedDLs = new List<DistributionList>();
             List<string> emails = new List<string>();
 
-            foreach (var dl in SelectedDLsListBox.Items)
-            {
-                var castedDL = (DistributionList)dl;
-                selectedDLs.Add(castedDL);
+            string mailBody = template.MailBody;
+            mailBody = template.MailBody.Replace("%%%EMAIL%%%", "aalhour@ccc.gr");
+            MailerUtils.SendMail("aalhour@ccc.gr", template.MailSubject, mailBody);
 
-                if (castedDL.DType.Equals(DLT.DL))
-                    emails.AddRange(DLEmails(castedDL.FILORDN));
-                else
-                    emails.AddRange(DDLEmails(castedDL.FILORDN));
-            }
+            mailBody = template.MailBody.Replace("%%%EMAIL%%%", "skahoush@ccc.gr");
+            MailerUtils.SendMail("skahoush@ccc.gr", template.MailSubject, mailBody);
 
-            //FINAL CODE
-            foreach (var dl in selectedDLs)
-            {
-                if (dl.DType.Equals(DLT.DL))
-                {
-                    MailerUtils.SendMail(dluHandler, template, new object[] { dl.FILORDN });
-                }
-                else
-                {
-                    MailerUtils.SendMail(ddluHandler, template, new object[] { dl.FILORDN });
-                }
-            }
+            mailBody = template.MailBody.Replace("%%%EMAIL%%%", "mali@ccc.gr");
+            MailerUtils.SendMail("mali@ccc.gr", template.MailSubject, mailBody);
+
+            //foreach (var dl in SelectedDLsListBox.Items)
+            //{
+            //    var castedDL = (DistributionList)dl;
+            //    selectedDLs.Add(castedDL);
+
+            //    if (castedDL.DType.Equals(DLT.DL))
+            //        emails.AddRange(DLEmails(castedDL.FILORDN));
+            //    else
+            //        emails.AddRange(DDLEmails(castedDL.FILORDN));
+            //}
+
+            ////FINAL CODE
+            //foreach (var dl in selectedDLs)
+            //{
+            //    if (dl.DType.Equals(DLT.DL))
+            //    {
+            //        //MailerUtils.SendMail(dluHandler, template, new object[] { dl.FILORDN });
+            //    }
+            //    else
+            //    {
+            //        //MailerUtils.SendMail(ddluHandler, template, new object[] { dl.FILORDN });
+            //    }
+            //}
+
+
+            //var greeceEmails = emails.Where(mail => mail.Contains("@ccc.gr")).Distinct().ToList();
+            //emails = emails.Where(mail => mail.Contains("@ccc.gr") == false).Distinct().Reverse().ToList();
+
+            //int counter = 0;
+
+            //foreach (var mail in emails)
+            //{
+            //    MailerUtils.SendMail(mail, template.MailSubject, template.MailBody);
+
+            //    counter++;
+
+            //    if (counter % 1000 == 0)
+            //    {
+            //        string x = string.Empty;
+            //    }
+            //}
 
             //Show message box
             MessageBox.Show("Emails were sent successfully.", "ISD Mail Phishing", MessageBoxButton.OK);

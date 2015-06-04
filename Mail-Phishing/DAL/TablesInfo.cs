@@ -19,7 +19,9 @@ namespace Mail_Phishing.DAL
             [Description("MailSubject")]
             MailSubject,
             [Description("MailBody")]
-            MailBody
+            MailBody,
+            [Description("EscapeSemicolons")]
+            EscapeSemicolons
         }
 
 

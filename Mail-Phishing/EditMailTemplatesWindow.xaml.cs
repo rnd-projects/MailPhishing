@@ -78,6 +78,7 @@ namespace Mail_Phishing
             bool status = false;
             string mailSubjectText = string.Empty;
             string mailBodyText = string.Empty;
+            string escapeSemicolons = string.Empty;
             MailTemplate selectedTemplate;
             char[] disallowedCharacters = new char[] { '\r', '\n', '\t' };
 
@@ -99,6 +100,8 @@ namespace Mail_Phishing
                 string[] tempStringArray = mailBodyText.Split(disallowedCharacters, StringSplitOptions.RemoveEmptyEntries);
                 mailBodyText = String.Join("<br />", tempStringArray);
 
+                escapeSemicolons = (EscapeHTMLCheckBox != null && EscapeHTMLCheckBox.IsChecked == true ? "Y" : "N");
+
                 if (!string.IsNullOrEmpty(mailSubjectText) && !string.IsNullOrEmpty(mailBodyText))
                 {
                     // Update the mail templates
@@ -106,6 +109,7 @@ namespace Mail_Phishing
 
                     selectedTemplate.MailSubject = mailSubjectText;
                     selectedTemplate.MailBody = mailBodyText;
+                    selectedTemplate.EscapeCharacters = escapeSemicolons;
 
                     status = MailTemplate.EditMailTemplate(selectedTemplate);
 

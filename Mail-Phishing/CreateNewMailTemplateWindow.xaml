@@ -45,5 +45,12 @@
         <RichTextBox x:Name="EmailTemplateBodyRichTextBox"
 			Margin="10,120,10,10"
 			Background="AliceBlue" />
+
+        <CheckBox 
+            x:Name="EscapeHTMLCheckBox"
+            Content="Escape HTML Code" 
+            Margin="495,90,0,0" 
+            VerticalAlignment="Top"
+            IsChecked="True" Height="19" HorizontalAlignment="Left" Width="122" />
     </Grid>
 </Window>

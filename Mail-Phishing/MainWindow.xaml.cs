@@ -43,11 +43,17 @@ namespace Mail_Phishing
         private List<DistributionList> GetDLGridData()
         {
             List<DistributionList> data = new List<DistributionList>();
+            
+            //Get all distribution lists!
+            var preconfiguredLists = DLUtils.PreConfiguredDistributionLists();
 
-            data = DLUtils.GetDistributionLists();
-            data.AddRange(DLUtils.GetDynamicDistributionLists());
+            var dynamicAndStaticLists = DLUtils.GetDistributionLists();
+            dynamicAndStaticLists.AddRange(DLUtils.GetDynamicDistributionLists());
+            dynamicAndStaticLists = dynamicAndStaticLists.OrderBy(item => item.CN).ToList();
 
-            data = data.OrderBy(item => item.CN).ToList();
+            //Concatenate the lists but keep the pre-configured ones ontop
+            data = preconfiguredLists;
+            data.AddRange(dynamicAndStaticLists);
 
             return data;
         }
@@ -138,7 +144,7 @@ namespace Mail_Phishing
 
             SelectMailTemplateWindow window = new SelectMailTemplateWindow();
             window.SelectedDLsListBox.ItemsSource = SelectedDLs;
-            window.ShowDialog();
+            window.Show();
         }
 
         private void DLViewRecipientsButton_Click(object sender, RoutedEventArgs e)

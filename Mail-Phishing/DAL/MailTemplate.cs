@@ -25,6 +25,9 @@ namespace Mail_Phishing.DAL
         [Required]
         public string MailBody { get; set; }
 
+        [Required]
+        public string EscapeCharacters { get; set; }
+
 
         //
         // Utils
@@ -50,8 +53,18 @@ namespace Mail_Phishing.DAL
                 {
                     ID = Convert.ToInt32(Helpers.ReturnZeroIfNull(row[TablesInfo.GetDescription(TablesInfo.MailTemplates.ID)])),
                     MailSubject = Convert.ToString(Helpers.ReturnEmptyIfNull(row[TablesInfo.GetDescription(TablesInfo.MailTemplates.MailSubject)])),
-                    MailBody = Convert.ToString(Helpers.ReturnEmptyIfNull(row[TablesInfo.GetDescription(TablesInfo.MailTemplates.MailBody)]))
+                    MailBody = Convert.ToString(Helpers.ReturnEmptyIfNull(row[TablesInfo.GetDescription(TablesInfo.MailTemplates.MailBody)])),
+                    EscapeCharacters = Convert.ToString(Helpers.ReturnEmptyIfNull(row[TablesInfo.GetDescription(TablesInfo.MailTemplates.EscapeSemicolons)]))
                 }).ToList();
+
+
+            foreach(var template in templates)
+            {
+                if(template.EscapeCharacters == "Y")
+                {
+                    template.MailBody = template.MailBody.Replace("###", ";");
+                }
+            }
 
             return templates;
         }
@@ -62,12 +75,19 @@ namespace Mail_Phishing.DAL
             int recordRowNumber = -1;
             Dictionary<string, object> values;
 
-            if ( newTemplate != null && (!string.IsNullOrEmpty(newTemplate.MailSubject) && !string.IsNullOrEmpty(newTemplate.MailBody)) )
+            if ( newTemplate != null && (!string.IsNullOrEmpty(newTemplate.MailSubject) && !string.IsNullOrEmpty(newTemplate.MailBody) && !string.IsNullOrEmpty(newTemplate.EscapeCharacters)) )
             {
+                if (newTemplate.EscapeCharacters == "Y")
+                {
+                    newTemplate.MailBody = newTemplate.MailBody.Replace(";", "###");
+                    newTemplate.MailBody = newTemplate.MailBody.Replace("'", "`");
+                }
+
                 values = new Dictionary<string, object>
                 {
                     { TablesInfo.GetDescription(TablesInfo.MailTemplates.MailSubject), newTemplate.MailSubject },
-                    { TablesInfo.GetDescription(TablesInfo.MailTemplates.MailBody), newTemplate.MailBody }
+                    { TablesInfo.GetDescription(TablesInfo.MailTemplates.MailBody), newTemplate.MailBody },
+                    { TablesInfo.GetDescription(TablesInfo.MailTemplates.EscapeSemicolons), newTemplate.EscapeCharacters }
                 };
 
                 recordRowNumber = DBRoutines.INSERT(
@@ -91,6 +111,8 @@ namespace Mail_Phishing.DAL
             {
                 values = new Dictionary<string, object>();
 
+                values.Add(TablesInfo.GetDescription(TablesInfo.MailTemplates.EscapeSemicolons), existingTemplate.EscapeCharacters);
+
                 if(!string.IsNullOrEmpty(existingTemplate.MailSubject))
                 {
                     values.Add(TablesInfo.GetDescription(TablesInfo.MailTemplates.MailSubject), existingTemplate.MailSubject);
@@ -98,6 +120,12 @@ namespace Mail_Phishing.DAL
 
                 if (!string.IsNullOrEmpty(existingTemplate.MailBody))
                 {
+                    if (existingTemplate.EscapeCharacters == "Y")
+                    {
+                        existingTemplate.MailBody = existingTemplate.MailBody.Replace(";", "###");
+                        existingTemplate.MailBody = existingTemplate.MailBody.Replace("'", "`");
+                    }
+
                     values.Add(TablesInfo.GetDescription(TablesInfo.MailTemplates.MailBody), existingTemplate.MailBody);
                 }
 

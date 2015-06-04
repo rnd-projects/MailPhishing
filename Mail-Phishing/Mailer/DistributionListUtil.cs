@@ -8,14 +8,15 @@ using Microsoft.Office.Interop.Outlook;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.DirectoryServices;
+using System.Configuration;
 
 
 namespace Mail_Phishing.Mailer
 {
     public class DistributionListUtil
     {
-
         private outlook.Application OlApp = (outlook.Application)Marshal.GetActiveObject("Outlook.Application");
+
 
         /// <summary>
         /// Extract whats in the Distribution List by showing the outlook Global Address List Search
@@ -68,6 +69,7 @@ namespace Mail_Phishing.Mailer
 
         }
 
+
         public void GetCurrentUserMembership()
         {
             outlook.AddressEntry currentUser = OlApp.Application.Session.CurrentUser.AddressEntry;
@@ -89,43 +91,18 @@ namespace Mail_Phishing.Mailer
             }
         }
 
-        /// <summary>
-        /// Get the List of A dynamic distribution Group in Key Value Pairs 
-        /// the key is the CN
-        /// the value is the filter for the membership of that group
-        /// </summary>
-        /// <returns>Dictionary of strings </returns>
-        public List<DistributionList> GetDynamicDistributionLists()
+
+        public List<DistributionList> PreConfiguredDistributionLists()
         {
-            List<DistributionList> distrubutionLists = new List<DistributionList>();
-
-            using (var group = new DirectoryEntry("GC://dc=ccg,dc=local"))
-            {
-
-                using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
-                using (var searcher = new DirectorySearcher(searchRoot, "(ObjectClass=msExchDynamicDistributionList)"))
-                using (var results = searcher.FindAll())
-                {
-                    foreach (SearchResult result in results)
-                    {
-                        if (result.Properties.Contains("cn") && result.Properties.Contains("msExchDynamicDLFilter"))
-                        {
-                            DistributionList dl = new DistributionList();
-
-                            dl.DType = DLT.DDL;
-                            dl.CN = result.Properties["cn"][0].ToString();
-                            dl.FILORDN = result.Properties["msExchDynamicDLFilter"][0].ToString();
-
-                            distrubutionLists.Add(dl);
-                        }
-                    }
+            return (new List<DistributionList>() {
+                new DistributionList { 
+                    DType = DLT.DDL,
+                    CN = "ALL CCC EMPLOYEES",
+                    FILORDN = Convert.ToString(ConfigurationManager.AppSettings["AllCCCEmployeesDL"])
                 }
-
-            }
-
-            return distrubutionLists;
-
+            });
         }
+
 
         /// <summary>
         /// Get the List of A distribution Group in Key Value Pairs
@@ -142,27 +119,75 @@ namespace Mail_Phishing.Mailer
 
                 using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
                 using (var searcher = new DirectorySearcher(searchRoot, "(&(objectCategory=group)(!groupType:1.2.840.113556.1.4.803:=2147483648))"))
-                using (var results = searcher.FindAll())
                 {
-                    foreach (SearchResult result in results)
+                    searcher.SizeLimit = 15000;
+                    searcher.PageSize = 250;
+
+                    using (var results = searcher.FindAll())
                     {
-                        if (result.Properties.Contains("cn") && result.Properties.Contains("distinguishedName"))
+                        foreach (SearchResult result in results)
                         {
-                            DistributionList dl = new DistributionList();
+                            if (result.Properties.Contains("cn") && result.Properties.Contains("distinguishedName"))
+                            {
+                                DistributionList dl = new DistributionList();
 
-                            dl.DType = DLT.DL;
-                            dl.CN = result.Properties["cn"][0].ToString();
-                            dl.FILORDN = result.Properties["distinguishedName"][0].ToString();
+                                dl.DType = DLT.DL;
+                                dl.CN = result.Properties["cn"][0].ToString();
+                                dl.FILORDN = result.Properties["distinguishedName"][0].ToString();
 
-                            distrubutionLists.Add(dl);
+                                distrubutionLists.Add(dl);
+                            }
                         }
                     }
-                }
+                }//end-searcher
 
             }
 
             return distrubutionLists;
         }
+        
+        
+        /// <summary>
+        /// Get the List of A dynamic distribution Group in Key Value Pairs 
+        /// the key is the CN
+        /// the value is the filter for the membership of that group
+        /// </summary>
+        /// <returns>Dictionary of strings </returns>
+        public List<DistributionList> GetDynamicDistributionLists()
+        {
+            List<DistributionList> distrubutionLists = new List<DistributionList>();
+
+            using (var group = new DirectoryEntry("GC://dc=ccg,dc=local"))
+            {
+                using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
+                using (var searcher = new DirectorySearcher(searchRoot, "(ObjectClass=msExchDynamicDistributionList)"))
+                {
+                    searcher.SizeLimit = 15000;
+                    searcher.PageSize = 250;
+
+                    using (var results = searcher.FindAll())
+                    {
+                        foreach (SearchResult result in results)
+                        {
+                            if (result.Properties.Contains("cn") && result.Properties.Contains("msExchDynamicDLFilter"))
+                            {
+                                DistributionList dl = new DistributionList();
+
+                                dl.DType = DLT.DDL;
+                                dl.CN = result.Properties["cn"][0].ToString();
+                                dl.FILORDN = result.Properties["msExchDynamicDLFilter"][0].ToString();
+
+                                distrubutionLists.Add(dl);
+                            }
+                        }
+                    }
+                }//end-searcher
+            }
+
+            return distrubutionLists;
+
+        }
+
 
         /// <summary>
         /// List Distribution List Members
@@ -178,17 +203,24 @@ namespace Mail_Phishing.Mailer
 
                 using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
                 using (var searcher = new DirectorySearcher(searchRoot, "(&(objectCategory=person)(|(objectClass=contact)(objectClass=user))(memberOf=" + dn + "))"))
-                using (var results = searcher.FindAll())
                 {
-                    foreach (SearchResult result in results)
+                    searcher.SizeLimit = 15000;
+                    searcher.PageSize = 250;
+
+                    using (var results = searcher.FindAll())
                     {
-                        if (result.Properties.Contains("mail"))
-                            addresses.Add(result.Properties["mail"][0].ToString());
+                        foreach (SearchResult result in results)
+                        {
+                            if (result.Properties.Contains("mail"))
+                                addresses.Add(result.Properties["mail"][0].ToString());
+                        }
                     }
-                }
+                }//end-searcher
             }
-            return addresses;
+
+            return addresses.Distinct().ToList();
         }
+
 
         /// <summary>
         /// List Dynamic Distribution List Members
@@ -206,16 +238,22 @@ namespace Mail_Phishing.Mailer
 
                 using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
                 using (var searcher = new DirectorySearcher(searchRoot, filter))
-                using (var results = searcher.FindAll())
                 {
-                    foreach (SearchResult result in results)
+                    searcher.SizeLimit = 15000;
+                    searcher.PageSize = 250;
+
+                    using (var results = searcher.FindAll())
                     {
-                        if (result.Properties.Contains("mail"))
-                            addresses.Add(result.Properties["mail"][0].ToString());
+                        foreach (SearchResult result in results)
+                        {
+                            if (result.Properties.Contains("mail"))
+                                addresses.Add(result.Properties["mail"][0].ToString());
+                        }
                     }
-                }
+                }//end-searcher
             }
-            return addresses;
+
+            return addresses.Distinct().ToList();
         }
     }
 
