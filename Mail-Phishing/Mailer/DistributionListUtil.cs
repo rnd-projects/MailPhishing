@@ -157,9 +157,9 @@ namespace Mail_Phishing.Mailer
         {
             List<DistributionList> distrubutionLists = new List<DistributionList>();
 
-            using (var group = new DirectoryEntry("GC://dc=ccg,dc=local"))
+            using (var group = new DirectoryEntry("GC://dc={DC},dc={LOCAL}}"))
             {
-                using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
+                using (var searchRoot = new DirectoryEntry("GC://{HOST_IP}/dc={DC},dc={LOCAL}"))
                 using (var searcher = new DirectorySearcher(searchRoot, "(ObjectClass=msExchDynamicDistributionList)"))
                 {
                     searcher.SizeLimit = 15000;
@@ -198,10 +198,9 @@ namespace Mail_Phishing.Mailer
         {
             List<string> addresses = new List<string>();
 
-            using (var group = new DirectoryEntry("GC://dc=ccg,dc=local"))
+            using (var group = new DirectoryEntry("GC://dc={DC},dc={LOCAL}}"))
             {
-
-                using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
+                using (var searchRoot = new DirectoryEntry("GC://{HOST_IP}/dc={DC},dc={LOCAL}"))
                 using (var searcher = new DirectorySearcher(searchRoot, "(&(objectCategory=person)(|(objectClass=contact)(objectClass=user))(memberOf=" + dn + "))"))
                 {
                     searcher.SizeLimit = 15000;
@@ -233,10 +232,9 @@ namespace Mail_Phishing.Mailer
 
             List<string> addresses = new List<string>();
 
-            using (var group = new DirectoryEntry("GC://dc=ccg,dc=local"))
+            using (var group = new DirectoryEntry("GC://dc={DC},dc={LOCAL}}"))
             {
-
-                using (var searchRoot = new DirectoryEntry("GC://10.1.0.230/dc=ccg,dc=local"))
+                using (var searchRoot = new DirectoryEntry("GC://{HOST_IP}/dc={DC},dc={LOCAL}"))
                 using (var searcher = new DirectorySearcher(searchRoot, filter))
                 {
                     searcher.SizeLimit = 15000;
